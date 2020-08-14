@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <!-- Bootstrap Font Awesome -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+    <!-- Bootstrap social CDN -->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-social/5.1.1/bootstrap-social.css">
+
+    <!--Google Fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@1,400;1,900&display=swap" rel="stylesheet">
+
+    <!--<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">-->
+    <style type="text/css">
+        *{
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+        body{
+            padding: 50px 0px 50px 0px;
+            z-index: 0;
+            font-family: 'Roboto', sans-serif;
+        }
+        .navbar-dark{
+            background-color: #512DA8;
+        }
+        .jumbotron {
+            padding:70px 30px 70px 30px;
+            margin: 0;
+            background: #9575CD ;
+            color:floralwhite;
+        }
+        .footer{
+        background-color: #D1C4E9;
+        margin:0px auto;
+        padding: 20px 0px 20px 0px;
+        color: black;
+        }
+        a{
+            text-decoration: none;
+        }
+        a:hover{
+            text-decoration: none;
+            color: black;
+        }
+        .login{
+            margin-top: 20px;
+            padding: 20px 5px 20px 5px;
+        }
+        .buttons:hover{
+            box-shadow: 0 0 20px 0 rgba(0,0,0,0.3);
+        }
+    </style>
+
+    <title>Employee Turnover Login</title>
+  </head>
+  <body class="text-black">
+    
+
+        <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container text-uppercase">
+          <a class="navbar-brand" href="{{url_for('home')}}"><img src="{{url_for('static', filename='Logo/logo-navbar.png')}}" height="40" width="80"></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('home')}}"><span><i class="fa fa-home fa-lg" aria-hidden="true"></i></span> Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('predict')}}"><span><i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i></span> Predict</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{url_for('contact')}}"><span><i class="fa fa-address-card fa-lg"></i></span> Contact</a>
+              </li>
+            </ul>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{url_for('register')}}"><span><i class="fa fa-user-plus fa-lg" aria-hidden="true"></i></span> Register</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{url_for('login')}}"><span><i class="fas fa-sign-in fa-lg"></i></i></span> Login</a>
+                </li>
+            </ul>
+          </div>
+      </div>
+        </nav>
+
+        <header class="jumbotron">
+            <div class="container">
+                <div class="row">
+                    <div class = "col-12 col-sm-6">
+                        <img src="{{url_for('static', filename='Logo/logo-head.png')}}" height="100">
+                    </div>
+                        <div class="col-12"><p><strong>Keep going forward because success will come</strong></p></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="container pt-3">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+              {% for category, message in messages %}
+                <div class="alert alert-{{ category }}">
+                  {{ message }}
+                </div>
+              {% endfor %}
+            {% endif %}
+          {% endwith %}
+        </div>
+
+
+
+        
+        <div class="container login">
+            <h2 align="center"><strong>Login</strong></h2>
+            <form method="POST", action="">
+                {{ form.hidden_tag() }}
+                <div class="form-group row">
+                    <div class="col-12 offset-md-3 offset-xl-4 col-md-6 col-xl-4">
+                        {{ form.email.label(class="form-control-label") }}
+                        {% if form.email.errors %}
+                            {{ form.email(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.email(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 offset-md-3 offset-xl-4 col-md-6 col-xl-4">
+                        {{ form.password.label(class="form-control-label") }}
+                        {% if form.password.errors %}
+                            {{ form.password(class="form-control form-control-lg is-invalid") }}
+                            <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                            </div>
+                        {% else %}
+                            {{ form.password(class="form-control form-control-lg") }}
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 offset-md-3 offset-xl-4 col-md-6 col-xl-4">
+                        <div class="form-check">
+                            {{ form.remember(class="form-check-input") }}
+                            {{ form.remember.label(class="form-check-label") }}
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 offset-md-3 offset-xl-4">
+                        {{ form.submit(class="btn btn-outline-info btn-lg buttons") }}
+
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12 offset-md-3 offset-xl-4">
+                        <small class="text-muted ml-2">
+                            <a href="#">Forgot Password?</a>
+                        </small>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="container">
+            <div class="border-top pt-3">
+                <div class="row">
+                    <div class="col-12 offset-md-3 offset-xl-4">
+                        <small class="text-muted">
+                            Not a member yet? <a class="ml-2" href="{{ url_for('register') }}">Register</a>
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        <footer class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-3 offset-1 col-sm-2">
+                        <h5>Links</h5>
+                        <ul class="list-unstyled">
+                            <li><a href="{{url_for('home')}}">Home</a></li>
+                            <li><a href="{{url_for('predict')}}">Predict</a></li>
+                            <li><a href="{{url_for('contact')}}">Contact</a></li>
+                            <li><a href="{{url_for('register')}}">Register</a></li>
+                            <li><a href="{{url_for('login')}}">Login</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-8 col-sm-5">
+                        <h5>Our Address</h5>
+                        <address>
+                            602, Gayatri Enclave, Gautam Nagar <br>
+                            Kalpana, Bhubaneswar, Odisha <br>
+                            INDIA <br>
+                        </address>
+                        <i class="fa fa-phone fa-lg"></i> +91 9078008781 <br>
+                        <i class="fa fa-fax fa-lg"></i> +91 9876543210 <br>
+                        <i class="fa fa-envelope fa-lg"></i> <a href="mailto:bharadwajshreenath.com">bharadwajshreenath@gmail.com</a>
+                    </div>
+                    <div class="col-12 col-sm-4 align-self-center">
+                        <div class="text-center">
+                            <a class="btn btn-social-icon btn-google" href="http://google.com"><i class="fa fa-google"></i></a>
+                            <a class="btn btn-social-icon btn-github" href="https://github.com/"><i class="fa fa-github"></i></a>
+                            <a class="btn btn-social-icon btn-linkedin" href="https://www.linkedin.com/in/shreenath-bharadwaj-497b40197/"><i class="fa fa-linkedin"></i></a>
+                            <a class="btn btn-social-icon btn-twitter" href="https://twitter.com/home"><i class="fa fa-twitter"></i></a>
+                            <a class="btn btn-social-icon btn-google" href="https://www.youtube.com/"><i class="fa fa-youtube"></i></a>
+                            <a class="btn btn-social-icon" href="mailto:"><i class="fa fa-envelope-o"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <p>© Copyright 2020 Bharadwaj Tech</p>
+                </div>
+            </div>
+        </footer>
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
